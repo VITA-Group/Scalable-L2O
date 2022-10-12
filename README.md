@@ -1,6 +1,6 @@
 # Scalable-L2O
 
-Implementation of ECCV 2022 paper Scalable Learning to Optimize: A Learned Optimizer Can Train Big Models. 
+Implementation of ECCV 2022 paper: Scalable Learning to Optimize: A Learned Optimizer Can Train Big Models. 
 
 ## Environment
 
