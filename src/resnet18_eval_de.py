@@ -171,16 +171,7 @@ def train_validate(model, opt_net, optimizer, scheduler, meta_optimizer, train_l
 			for name, p in model.named_parameters():
 				size = p.nelement()
 
-				if args.dynamic_lr:
-					if epoch <= 30:
-						result_params[name] = p - up_grad[idx:idx+size].view(*p.size()) #updates.view(*p.size()) * args.scale
-					elif epoch <= 50:
-						result_params[name] = p - 0.1 * up_grad[idx:idx+size].view(*p.size()) #updates.view(*p.size()) * args.scale
-
-					else:
-						result_params[name] = p - 0.01 * up_grad[idx:idx+size].view(*p.size()) #updates.view(*p.size()) * args.scale
-				else:
-					result_params[name] = p - up_grad[idx:idx+size].view(*p.size())
+				result_params[name] = p - up_grad[idx:idx+size].view(*p.size())
 						
 				result_params[name].retain_grad()        
 				idx = idx + size
@@ -253,10 +244,8 @@ if __name__ == '__main__':
 	parse_gpu(args)
 	print_args(args)
 
-	
 
-	train_loader, test_loader = setup_model_dataset(args)
-	
+	train_loader, test_loader = setup_model_dataset(args, dataset=args.dataset)
 	
 	args.name = f"opt_eval_resnet18_{args.dataset}_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_sc{args.scale}_mlr{args.meta_lr}_bs{args.batch_size}"
 	if args.use_second_layer:
@@ -270,6 +259,12 @@ if __name__ == '__main__':
 	
 	wandb.init(project=f"l2o_lora", entity="xxchen", name=args.name)
 	wandb.config.update({'hidden_sz': args.hidden_sz, 'training_steps': args.training_steps, 'unroll_length': args.unroll_length})
+	if args.dataset == 'CIFAR10':
+		num_classes = 10
+	else:
+		num_classes = 100
+
+	model = resnet18(num_classes=num_classes)
 	if args.use_second_layer:
 		nlayer=2
 	else:
@@ -297,18 +292,15 @@ if __name__ == '__main__':
 	train_step = 0
 	best_val_accuracy = None
 
-	#P = calculate_basis(model, opt_net, optimizer, scheduler, meta_optimizer, train_loader, test_loader, args, create_model, init_weight, train_step=train_step, epoch = 0, unroll=args.unroll_length, best_val_accuracy=best_val_accuracy)
-	#assert False
-	P = torch.load("resnet18_CIFAR10_P.pth.tar")
+	P = torch.load(f"resnet18_{args.dataset}_P.pth.tar")
+	state_dict= torch.load(f"resnet18_{args.dataset}_0.pt")
 
-	model = resnet18(num_classes=10)
-	state_dict= torch.load("resnet18_CIFAR10_0.pt")
 	new_state_dict = {}
 	for key in state_dict:
 		if key.startswith("module."):
 			new_state_dict[key[7:]] = state_dict[key]
 	def create_model():
-		resnet = resnet18(num_classes=10)
+		resnet = resnet18(num_classes=num_classes)
 		resnet.load_state_dict(new_state_dict)
 		return resnet
 	model = create_model().cuda()
