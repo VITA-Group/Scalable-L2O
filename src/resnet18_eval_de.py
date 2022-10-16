@@ -206,9 +206,9 @@ def train_validate(model, opt_net, optimizer, scheduler, meta_optimizer, train_l
 			elapsed = time.time() - log_start_time
 
 			log_str = '| epoch {:3d} step {:>8d}' \
-								'| ms/batch {:5.2f} | loss {:5.2f} | avg loss {:5.2f} | ppl {:5.2f}'.format(
+								'| ms/batch {:5.2f} | loss {:5.2f} | avg loss {:5.2f}'.format(
 								epoch, train_step, 
-								elapsed * 1000 / args.log_interval, avg_lm_loss.val, avg_lm_loss.avg, math.exp(avg_lm_loss.avg)) 
+								elapsed * 1000 / args.log_interval, avg_lm_loss.val, avg_lm_loss.avg) 
 			wandb.log({"meta_eval/avg_train_loss": avg_lm_loss.avg}, step=train_step)
 			print(log_str)
 			log_start_time = time.time()
