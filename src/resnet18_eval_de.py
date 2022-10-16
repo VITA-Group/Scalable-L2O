@@ -37,7 +37,7 @@ from torch.utils.data import DataLoader
 
 parser = argparse.ArgumentParser(description='PyTorch GPT2 evaluation script.')
 parser.add_argument("--batch-size", type=int, default=32)
-parser.add_argument("--dynamic-lr", action="store_true")
+parser.add_argument("--dataset", default='CIFAR10', choices=['CIFAR10', 'CIFAR100'])
 
 add_gpu_params(parser)
 add_optimizer_params(parser)
@@ -258,11 +258,11 @@ if __name__ == '__main__':
 	train_loader, test_loader = setup_model_dataset(args)
 	
 	
-	args.name = f"opt_eval_resnet18_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_dim{args.lora_dim}_sc{args.scale}_al{args.lora_alpha}_mlr{args.meta_lr}_bs{args.batch_size}"
+	args.name = f"opt_eval_resnet18_{args.dataset}_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_sc{args.scale}_mlr{args.meta_lr}_bs{args.batch_size}"
 	if args.use_second_layer:
 		args.name = args.name + "_second"
-	args.work_dir = f"./trained_models/eval_opt_resnet18_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_dim{args.lora_dim}_sc{args.scale}_al{args.lora_alpha}_mlr{args.meta_lr}_bs{args.batch_size}"
-	args.optimizer_checkpoint = f"./trained_models/opt_resnet18_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_dim{args.lora_dim}_sc{args.scale}_al{args.lora_alpha}_mlr{args.meta_lr}_bs{args.batch_size}/best.pt"
+	args.work_dir = f"./trained_models/eval_opt_resnet18_{args.dataset}_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_sc{args.scale}_mlr{args.meta_lr}_bs{args.batch_size}"
+	args.optimizer_checkpoint = f"./trained_models/opt_resnet18_{args.dataset}_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_sc{args.scale}_mlr{args.meta_lr}_bs{args.batch_size}/best.pt"
 	if args.use_second_layer:
 		args.work_dir = args.work_dir + "_second"
 	

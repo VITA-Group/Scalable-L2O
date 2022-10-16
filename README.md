@@ -22,5 +22,13 @@ We provide pre-generated subspaces for models in this [link]. Optionally, one ca
 
 ResNet-18
 ```bash
+python -u src/resnet18_ft_de.py --max_epoch 20 --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10 --meta_train_eval_epoch 2 
+```
 
+
+#### Meta-Testing
+
+ResNet-18
+```bash
+python -u src/resnet18_eval_de.py --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10
 ```
