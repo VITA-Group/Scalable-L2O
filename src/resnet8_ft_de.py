@@ -291,10 +291,10 @@ if __name__ == '__main__':
 	train_loader, test_loader = setup_model_dataset(args)
 	
 	
-	args.name = f"opt_resnet8_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_mlr{args.meta_lr}_bs{args.batch_size}"
+	args.name = f"opt_resnet8_{args.dataset}_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_mlr{args.meta_lr}_bs{args.batch_size}"
 	if args.use_second_layer:
 		args.name = args.name + "_second"
-	args.work_dir = f"./trained_models/opt_resnet8_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_mlr{args.meta_lr}_bs{args.batch_size}"
+	args.work_dir = f"./trained_models/opt_resnet8_{args.dataset}_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_mlr{args.meta_lr}_bs{args.batch_size}"
 	
 	if args.use_second_layer:
 		args.work_dir = args.work_dir + "_second"
