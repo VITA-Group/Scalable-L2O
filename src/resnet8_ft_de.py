@@ -129,7 +129,7 @@ def train_validate(model, opt_net, optimizer, scheduler, meta_optimizer, train_l
 		nlayer=2
 	else:
 		nlayer=1
-	print
+
 	mt.append(torch.zeros(P.shape[0], 1, requires_grad=False).cuda())
 	vt.append(torch.zeros(P.shape[0], 1, requires_grad=False).cuda())
 	hidden_states.append([torch.zeros(P.shape[0], opt_net.hidden_sz, requires_grad=True).to(args.local_rank) for _ in range(nlayer)])
@@ -183,7 +183,6 @@ def train_validate(model, opt_net, optimizer, scheduler, meta_optimizer, train_l
 
 			grad = torch.mm(P, flatten)
 
-			#for name, p, grad, m, v, h, c in zip(param_names, model.parameters(), all_params_gradients, mt, vt, hidden_states, cell_states):
 			mt[0].mul_(beta1).add_((1 - beta1) * grad)
 			mt_hat = mt[0] / (1-beta1**(current_idx + 1))
 			vt[0].mul_(beta2).add_((1 - beta2) * (grad ** 2))
@@ -206,7 +205,7 @@ def train_validate(model, opt_net, optimizer, scheduler, meta_optimizer, train_l
 			idx = 0
 			for name, p in model.named_parameters():
 				size = p.nelement()
-				result_params[name] = p - up_grad[idx:idx+size].view(*p.size()) #updates.view(*p.size()) * args.scale
+				result_params[name] = p - up_grad[idx:idx+size].view(*p.size()) 
 				result_params[name].retain_grad()        
 				idx = idx + size
 
@@ -292,10 +291,10 @@ if __name__ == '__main__':
 	train_loader, test_loader = setup_model_dataset(args)
 	
 	
-	args.name = f"opt_resnet8_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_dim{args.lora_dim}_sc{args.scale}_al{args.lora_alpha}_mlr{args.meta_lr}_bs{args.batch_size}"
+	args.name = f"opt_resnet8_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_mlr{args.meta_lr}_bs{args.batch_size}"
 	if args.use_second_layer:
 		args.name = args.name + "_second"
-	args.work_dir = f"./trained_models/opt_resnet8_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_dim{args.lora_dim}_sc{args.scale}_al{args.lora_alpha}_mlr{args.meta_lr}_bs{args.batch_size}"
+	args.work_dir = f"./trained_models/opt_resnet8_ul{args.unroll_length}_ts{args.training_steps}_hz_{args.hidden_sz}_mlr{args.meta_lr}_bs{args.batch_size}"
 	
 	if args.use_second_layer:
 		args.work_dir = args.work_dir + "_second"
