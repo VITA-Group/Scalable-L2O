@@ -36,19 +36,19 @@ ResNet8 (CIFAR-10)
 python -u src/resnet8_ft_de.py --max_epoch 20 --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10 --meta_train_eval_epoch 2 
 ```
 
-ResNet20 (CIFAR-100)
+ResNet20 (CIFAR-10)
 ```bash
-python -u src/resnet20_ft_de.py --max_epoch 20 --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10 --meta_train_eval_epoch 2 --dataset CIFAR100
+python -u src/resnet20_ft_de.py --max_epoch 20 --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10 --meta_train_eval_epoch 2
 ```
 
 #### Meta-Testing
 
 ResNet-8 (CIFAR-10)
 ```bash
-python -u src/resnet8_eval_de.py --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10
+python -u src/resnet8_eval_de.py --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10 --max_epoch 100
 ```
 
 ResNet-20 (CIFAR-100)
 ```bash
-python -u src/resnet20_eval_de.py --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10 --dataset CIFAR100 --max_epoch 100
+python -u src/resnet20_eval_de.py --eval_interval 2000 --log_interval 100 --hidden_sz 8 --scale 1e-4 --log_interval 5 --training_steps 1000 --batch-size 128 --unroll 10 --max_epoch 100
 ```
