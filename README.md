@@ -16,7 +16,7 @@ conda activate sl2o
 ### CNNs
 #### Subspaces
 
-We provide pre-generated subspaces for models in this [link]. Optionally, one can generate the subspaces by themselves. Please refer to the `subspaces` directory for more details. 
+We provide pre-generated subspaces for models in this [link](https://drive.google.com/drive/folders/1PVfLiBXg-n_YknBAlaN8ZpRFiP5B_zdd?usp=sharing). Optionally, one can generate the subspaces by themselves. Please refer to the `subspaces` directory for more details. 
 
 #### Meta-Training
 
