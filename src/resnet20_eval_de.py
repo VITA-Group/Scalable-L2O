@@ -286,8 +286,7 @@ if __name__ == '__main__':
 	
 	os.makedirs(args.work_dir, exist_ok=True)
 
-	
-	wandb.init(project=f"l2o_lora", entity="xxchen", name=args.name)
+
 	wandb.config.update({'hidden_sz': args.hidden_sz, 'training_steps': args.training_steps, 'unroll_length': args.unroll_length})
 	if args.use_second_layer:
 		nlayer=2

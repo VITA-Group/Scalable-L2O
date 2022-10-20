@@ -217,7 +217,6 @@ if __name__ == '__main__':
 
 	args.logging = create_exp_dir(args.work_dir)
 	
-	wandb.init(project=f"l2o_lora", entity="xxchen", name=args.name)
 	wandb.config.update({'hidden_sz': args.hidden_sz, 'training_steps': args.training_steps, 'unroll_length': args.unroll_length})
 	if args.dataset == 'CIFAR10':
 		num_classes = 10

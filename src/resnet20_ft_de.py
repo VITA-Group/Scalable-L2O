@@ -301,8 +301,6 @@ if __name__ == '__main__':
 		args.work_dir = args.work_dir + "_second"
 	args.logging = create_exp_dir(args.work_dir)
 
-	
-	wandb.init(project=f"l2o_lora", entity="xxchen", name=args.name)
 	wandb.config.update({'hidden_sz': args.hidden_sz, 'training_steps': args.training_steps, 'unroll_length': args.unroll_length})
 	model = resnet20(num_classes=10)
 	create_model = lambda: resnet20(num_classes=10)
